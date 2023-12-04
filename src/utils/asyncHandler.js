@@ -1,13 +1,15 @@
-import { Promise } from "mongoose"
-
-const asyncHandler= (requestHandler)=>{
-    (re,res,next)=>{
-        Promise.resole(requestHandler(req,res,next))
-        .catch((err)=>next(err))
+const asyncHandler = (requestHandler) => {
+    
+    return (req, res, next) => {
+        Promise.resolve(requestHandler(req, res, next))
+        .catch((err) => next(err))
     }
 }
 
-export {asyncHandler }
+
+export default asyncHandler ;
+
+
 
 
 
