@@ -1,33 +1,34 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
-import {v2 as cloudinary} from 'cloudinary';
-
 
 cloudinary.config({ 
-  cloud_name: process.env.CLOUDNARY_CLOUD_NAME, 
-  api_key:process.env.CLOUDNARY_API_KEY, 
-  api_secret: process.env.CLOUDNARY_API_SECRET 
-});
+    cloud_name: 'chaibackend', 
+    api_key: '713394255198363', 
+    api_secret: 'sflSxLbtpqlfifdl2kJq3dGCwdg' 
+  });
 
-
-const uploadOnCloudnary = async (localFilepath)=>{
+const uploadOnCloudinary = async (localFilePath) => {
     try {
-        if(!localFilepath) return null
-        // upload the file on cloudnary
-        const response = await cloudinary.uploader.upload(localFilepath,{
-            resource_type:auto
+        if (!localFilePath) return null;
+
+        // Upload the file on Cloudinary
+        console.log("Local path is coming till here", localFilePath);
+        const response = await cloudinary.uploader.upload(localFilePath,{
+          resource_type:"image"
         })
-        // file has been uploaded successfully 
-        console.log("file is uploaded on cloudnary succcessully",
-        response.url);
+
+        // File has been uploaded successfully
+        console.log("File is uploaded on Cloudinary", response);
+
+        // Remove the locally saved temporary file
+        fs.unlinkSync(localFilePath);
 
         return response;
-
     } catch (error) {
-        fs.unlinkSync(localFilepath) //remove the locally store fileas the upload option got failed
-        
+        // Remove the locally saved temporary file as the upload operation failed
+        fs.unlinkSync(localFilePath);
+        return null;
     }
 }
 
-export {uploadOnCloudnary}
-
+export { uploadOnCloudinary };

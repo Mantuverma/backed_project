@@ -1,2 +1,2 @@
 
-export  const DB_NAME = "mantu";
+export  const DB_NAME = "chaibackend";
